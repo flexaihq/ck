@@ -2,7 +2,14 @@
 #
 # Some functionality was reused from the CK framework for compatibility
 #
-# Written by Grigori Fursin
+# Author(s): Grigori Fursin
+# Contributor(s):
+#
+# Copyright: https://github.com/mlcommons/ck/blob/master/COPYRIGHT.txt
+# License: https://github.com/mlcommons/ck/blob/master/LICENSE.md
+# History: https://github.com/mlcommons/ck/blob/master/HISTORY.CM.md
+# White paper: https://arxiv.org/abs/2406.16791
+# Project contributors: https://github.com/mlcommons/ck/blob/master/CONTRIBUTING.md
 
 import os
 
@@ -2219,3 +2226,41 @@ def get_memory_use(console = False):
                         'total_memory': total_memory,
                         'total_memory_gb': total_memory_gb}
 
+##############################################################################
+def get_disk_use(path = '/', console = False):
+    """
+    Get disk space
+
+    Args:
+        console (bool): if True, print to console
+
+    Returns:
+       total (int)
+       total_gb (float)
+       used (int)
+       used_gb (float)
+       free (int)
+       free_gb (float)
+
+    """
+
+    import shutil
+
+    total, used, free = shutil.disk_usage(path)
+
+    total_gb = total / 1e9
+    used_gb = used / 1e9
+    free_gb = free / 1e9
+
+    if console:
+        print(f"Total disk space: {total_gb:.2f} GB")
+        print(f"Used disk space: {used_gb:.2f} GB")
+        print(f"Free disk space: {free_gb:.2f} GB")
+
+    return {'return':0, 
+            'total': total,
+            'total_gb': total_gb,
+            'used': used,
+            'used_gb': used_gb,
+            'free': free,
+            'free_gb': free_gb}

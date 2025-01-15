@@ -1,6 +1,13 @@
 # Collective Mind core functions
 #
-# Written by Grigori Fursin
+# Author(s): Grigori Fursin
+# Contributor(s):
+#
+# Copyright: https://github.com/mlcommons/ck/blob/master/COPYRIGHT.txt
+# License: https://github.com/mlcommons/ck/blob/master/LICENSE.md
+# History: https://github.com/mlcommons/ck/blob/master/HISTORY.CM.md
+# White paper: https://arxiv.org/abs/2406.16791
+# Project contributors: https://github.com/mlcommons/ck/blob/master/CONTRIBUTING.md
 
 from cmind.config import Config
 from cmind.repos import Repos
@@ -858,7 +865,7 @@ class CM(object):
           'h', 'help', 'version', 'out', 'j', 'json', 
           'save_to_json_file', 'save_to_yaml_file', 'common', 
           'ignore_inheritance', 'log', 'logfile', 'raise', 'repro',
-          'f', 'time', 'profile']]
+          'i', 'f', 'time', 'profile']]
 
         delayed_error = ''
         
@@ -881,6 +888,8 @@ class CM(object):
             self_time1 = time.time()
 
         self_profile = control.get('profile', False)
+
+        self_info = control.get('i', False)
 
         # Check repro
         use_log = str(control_flags.pop('log', '')).strip().lower()
@@ -955,6 +964,13 @@ class CM(object):
             self.log(f"x input: {spaces} ({i})", "debug")
 
         # Call access helper
+        if not x_was_called and self_info:
+            utils.get_memory_use(True)
+            print ('')
+            utils.get_disk_use('/', True)
+            print ('')
+
+
         if not x_was_called and self_profile:
             # https://docs.python.org/3/library/profile.html#module-cProfile
             import cProfile, pstats, io
