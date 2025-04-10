@@ -1,4 +1,4 @@
-# Collective Mind command line wrapper
+# Collective Mind and Common Metadata eXchange command line wrapper
 #
 # Author(s): Grigori Fursin
 # Contributor(s):
@@ -121,6 +121,49 @@ def run_script(argv = None):
         argv = sys.argv[1:]
 
     return run(['run', 'script'] + argv)
+
+############################################################
+def run_legacy_mlc(argv = None):
+    """
+    Shortcut to legacy CM front-end (mlc, mlcflow)
+
+    TBD: unify output for CMX
+
+    """
+
+    return run_legacy_mlcflow('mlc', argv)
+
+############################################################
+def run_legacy_mlcr(argv = None):
+    """
+    Shortcut to legacy CM front-end (mlcr, mlcflow)
+
+    TBD: unify output for CMX
+
+    """
+
+    return run_legacy_mlcflow('mlcr', argv)
+
+############################################################
+def run_legacy_mlcflow(legacy_frontend, argv = None):
+    """
+    Shortcut to legacy CM front-end (mlcr, mlcflow)
+
+    TBD: unify output for CMX
+
+    """
+
+    if argv is None:
+        argv = sys.argv[1:]
+
+    import subprocess
+
+    rx = subprocess.run([legacy_frontend] + argv)
+
+    return_code = rx.returncode
+
+    sys.exit(return_code)
+
 
 ############################################################
 def docker_script(argv = None):

@@ -13,7 +13,7 @@ maintainers = [
     {name = "Grigori Fursin", email = "grigori.fursin@ctuning.org"}
 ]
 
-description = "Collective Mind automation framework (CM)"
+description = "Common Metadata eXchange framework (CMX) and Collective Mind automation framework (CM)"
 
 requires-python = ">=3.7"
 
@@ -30,6 +30,9 @@ keywords = [
  "cmind",
  "cm",
  "cmx",
+ "cmx-mlcflow",
+ "cmx-mlcr",
+ "common metadata exchange",
  "collective mind",
  "automation",
  "portability",
@@ -67,6 +70,8 @@ include-package-data = true
 cmind = ["repo/*", 
          "repo/automation/automation/*",
          "repo/automation/ckx/*",
+         "repo/automation/mlc/*",
+         "repo/automation/mlcr/*",
          "repo/automation/core/*",
          "repo/automation/core/cm_60cb625a46b38610/*",
          "repo/automation/repo/*"
@@ -80,14 +85,19 @@ exclude = ["docs", "docs.*", "tests", "tests.*"]
 
 [project.urls]
 Homepage = "https://cKnowledge.org"
+Documentation = "https://docs.mlcommons.org/ck"
 Repository = "https://github.com/mlcommons/ck/tree/master/cm"
 Issues = "https://github.com/mlcommons/ck/issues"
 Changelog = "https://github.com/mlcommons/ck/blob/master/cm/CHANGES.md"
 
 [project.scripts]
-cmind = "cmind.cli:run"
-cm = "cmind.cli:run"
 cmx = "cmind.cli:runx"
+cmind = "cmind.cli:runx"
+cm = "cmind.cli:run"
+cmxr = "cmind.cli:run_legacy_mlcr"
+cmlcr = "cmind.cli:run_legacy_mlcr"
+cr = "cmind.cli:run_legacy_mlcr"
+cmlc = "cmind.cli:run_legacy_mlc"
 cmr = "cmind.cli:run_script"
 cmrd = "cmind.cli:docker_script"
 cmg = "cmind.cli:gui_script"

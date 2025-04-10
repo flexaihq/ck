@@ -1,0 +1,78 @@
+# Author and developer: Grigori Fursin
+
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = ["setuptools"]
+
+[project]
+name = "cm4mlops"
+
+authors = [
+    {name = "Grigori Fursin and contributors", email = "grigori.fursin@ctuning.org"}
+]
+
+maintainers = [
+    {name = "Grigori Fursin", email = "grigori.fursin@ctuning.org"}
+]
+
+description = "CM4MLOps repository"
+
+requires-python = ">=3.7"
+
+dependencies = [
+    "cmind>=3.5.2",
+    "flextask" 
+]
+
+keywords = [
+ "cm4mlops",
+ "cm4mlperf",
+ "mlperf",
+ "virtual mlops",
+ "vmlops",
+ "cmind",
+ "workflow",
+ "automation",
+ "mlops",
+ "devops",
+ "aiops",
+ "portability",
+ "reusability"
+]
+
+license = {text = "Apache 2.0"}
+
+classifiers = [
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+dynamic = ["readme", "version"]
+
+[tool.setuptools.dynamic]
+readme = {file = "cm4mlops/README.md", content-type = "text/markdown"}
+version = {file = "cm4mlops/VERSION"}
+
+[tool.setuptools]
+zip-safe = false
+include-package-data = true
+
+[tool.setuptools.package-data]
+cm4mlops = ["**"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["cm4mlops"]
+
+
+[project.urls]
+Homepage = "https://github.com/mlcommons/ck"
+Documentation = "https://docs.mlcommons.org/ck"
+Repository = "https://github.com/mlcommons/ck/tree/master/cm4mlops"
+Issues = "https://github.com/mlcommons/ck/issues"
+Changelog = "https://github.com/mlcommons/ck/blob/master/cm4mlops/CHANGES.md"

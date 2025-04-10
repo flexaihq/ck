@@ -308,14 +308,14 @@ class CM(object):
 
         if logger != None:
             if t == 'debug':
-                self.logger.debug(s)
+                logger.debug(s)
             elif t == 'warning':
-                self.logger.warning(s)
+                logger.warning(s)
             elif t == 'error':
-                self.logger.error(s)
+                logger.error(s)
             # info
             else:
-                self.logger.info(s)
+                logger.info(s)
 
         return
 
@@ -862,7 +862,7 @@ class CM(object):
         # compatibility with older commands like cm/cmx rm cache -f
 
         unknown_control_flags = [flag for flag in control_flags if flag not in [
-          'h', 'help', 'version', 'out', 'j', 'json', 
+          'h', 'help', 'v', 'version', 'out', 'j', 'json', 
           'save_to_json_file', 'save_to_yaml_file', 'common', 
           'ignore_inheritance', 'log', 'logfile', 'raise', 'repro',
           'i', 'f', 'time', 'profile']]
@@ -908,7 +908,7 @@ class CM(object):
             ii['control'] = {}
             for k in control:
                 if not k.startswith('_') and k not in ['repro']:
-                    ii['control'][k] = i[k]
+                    ii['control'][k] = control[k]
 
             utils.save_json(os.path.join('cmx-repro', 'cmx-input.json'), 
                             meta = ii)
@@ -1079,7 +1079,7 @@ class CM(object):
         # Check if asked for "version" and no automation
         if action == 'version' and automation == '':
             automation = 'core'
-        elif action == '' and automation == '' and control.get('version', False):
+        elif action == '' and automation == '' and (control.get('version', False) or control.get('v', False) or control.get('_input',{}).get('version', False)):
             action = 'version'
             automation = 'core'
         elif action == 'init' and automation == '':
@@ -1111,7 +1111,7 @@ class CM(object):
                    print ('Control flags:')
                    print ('')
                    print ('  -h | -help - print this help')
-                   print ('  -version - print version')
+                   print ('  -v | -version - print version')
                    print ('  -out (default) - output to console')
                    print ('  -out=con (default) - output to console')
                    print ('  -j | -json - print output of the automation action to console as JSON')
@@ -1125,6 +1125,7 @@ class CM(object):
                    print ('  -raise - raise Python error when automation action fails')
                    print ('  -time - print elapsed time for a given automation')
                    print ('  -profile - profile a given automation')
+                   print ('  -i - print info about available memory and disk space')
                    print ('  -repro - record various info to the cmx-repro directory to replay CMX command')
                    print ('')
                    print ('Check https://github.com/mlcommons/ck/tree/master/cm/docs/cmx for more details.')
@@ -1454,23 +1455,33 @@ class CM(object):
         # Process artifacts for this automation action
         if len(artifacts)>0:
             parsed_artifacts = []
+            unparsed_artifacts = []
 
             for extra_artifact in artifacts:
                 # Parse artifact
                 r = parse_cm_object_and_check_current_dir(self, extra_artifact)
-                if r['return'] >0 : return r
-
-                parsed_artifacts.append(r['cm_object'])
-
+# Adding compatibility for the legacy cmlcr
+#                if r['return'] >0 : return r
+                if r['return'] == 0 : 
+                    parsed_artifacts.append(r['cm_object'])
+                else:
+                    unparsed_artifacts.append(extra_artifact)
+      
             control['_parsed_artifacts'] = parsed_artifacts
+
+            if len(unparsed_artifacts)>0:
+                control['_unparsed_artifacts'] = unparsed_artifacts
 
         # Check artifact and artifacts
         if artifact != '':
             # Parse artifact
             r = parse_cm_object_and_check_current_dir(self, artifact)
-            if r['return'] >0 : return r
-
-            control['_parsed_artifact'] = r['cm_object']
+# Adding compatibility for the legacy cmlcr
+#            if r['return'] >0 : return r
+            if r['return'] == 0 : 
+                control['_parsed_artifact'] = r['cm_object']
+            else:
+                control['_unparsed_artifact'] = artifact
 
         # Check min CM version requirement
         min_cm_version = automation_meta.get('min_cm_version','').strip()

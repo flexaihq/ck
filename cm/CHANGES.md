@@ -1,3 +1,33 @@
+## CMX V4.1.4
+   - fixed minor bug for "cmx --version"
+   - added "cmx pull repo --dir2" to support "dir/dir" directories
+
+## CMX V4.1.3
+   - fixed a bug with "cmx -log" (#1410)
+   - fixed a bug with "cmx -repro" (#1409)
+
+## CMX V4.1.2
+   - fixed error reporting in cm/cmx info artifact if artifact not found
+   - added "cmx get repo" or "cmx get repo {repo alias}" or "cm get repo" (#1405)
+   - added support for PAT in "cmx pull repo {url}" (#1381)
+
+## CMX V4.1.1
+   - fixed legacy interfaces
+
+## CMX V4.1.0
+   - added -v flag to print version
+   - improved help
+   - added support for legacy CM front-end for MLPerf (mlc, mlcr, mlcflow)
+
+## CMX V4.0.2
+   - bug fixes
+
+## CMX V4.0.1
+   - provided backward compatibility with various MLCommons tools
+
+## CMX V4.0.0
+   - added CMX interface for new tools
+
 ## V3.5.3
    - fixed `cm info repo` and `cmx info repo`: https://github.com/mlcommons/ck/issues/1378 
 
